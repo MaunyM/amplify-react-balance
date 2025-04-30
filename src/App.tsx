@@ -1,11 +1,21 @@
+import { useAuthenticator } from '@aws-amplify/ui-react';
 import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
+import { deleteUser } from 'aws-amplify/auth';
 
 const client = generateClient<Schema>();
+async function handleDeleteUser() {
+  try {
+    await deleteUser();
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 function App() {
   const [operations, setOperations] = useState<Array<Schema["Operation"]["type"]>>([]);
+  const { signOut, } = useAuthenticator();
 
   useEffect(() => {
     client.models.Operation.observeQuery().subscribe({
@@ -19,13 +29,15 @@ function App() {
 
   return (
     <main>
-      <h1>My todos</h1>
+      <h1>Opérations</h1>
       <button onClick={createTodo}>+ new</button>
       <ul>
         {operations.map((operation) => (
           <li key={operation.id}>{operation.desc}</li>
         ))}
       </ul>
+      <button onClick={handleDeleteUser}>Supprimer mon compte</button>
+      <button onClick={signOut}>Sign out</button>
       <div>
         🥳 App successfully hosted. Try creating a new todo.
         <br />
