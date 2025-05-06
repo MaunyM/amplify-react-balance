@@ -4,6 +4,7 @@ import type { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
 import { deleteUser } from 'aws-amplify/auth';
 
+
 const client = generateClient<Schema>();
 async function handleDeleteUser() {
   try {
