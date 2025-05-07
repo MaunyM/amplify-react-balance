@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 
-import { Authenticator } from '@aws-amplify/ui-react';
 import { Amplify } from "aws-amplify";
 import outputs from "../amplify_outputs.json";
+import { Authenticator } from '@aws-amplify/ui-react';
 
 
 import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
@@ -17,7 +17,7 @@ Amplify.configure(outputs);
 ReactDOM.createRoot(document.getElementById("root")!).render(
   
   <React.StrictMode>
-    <Authenticator>
+
     <Router>
       <div>
         <nav>
@@ -31,11 +31,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           </ul>
         </nav>
         <Routes>
-          <Route path="/" element={<App />} />
+          <Route path="/" element={
+             <Authenticator><App /></Authenticator>} />
           <Route path="/politique-confidentialite" element={<PolitiqueConfidentialite/>} />
         </Routes>
       </div>
     </Router>
-    </Authenticator>
   </React.StrictMode>
 );
